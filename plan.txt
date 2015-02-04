@@ -1,0 +1,24 @@
+V1
+
+--API--
+next : ".next"
+prev: ".prev"
+
+slideTo: function(index){}
+onBefore: function(index, nextIndex, prevIndex, direction){}
+onAfter: function(index, nextIndex, prevIndex, direction){}
+Destroy
+
+
+--Defaults--
+
+dots
+speed
+ease
+scrollduration
+keyboardScrolling
+
+--details--
+touch events
+always had a scrollbar for usability
+window scrollperfectly back to slide if scrolled by hand

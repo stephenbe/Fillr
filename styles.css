@@ -1,0 +1,55 @@
+body, html, .slides {
+  margin:0;
+  padding:0;
+
+  height:100%;
+}
+
+.slide {
+  height:100%;
+}
+
+
+#slide1 {
+  background-color:#001f3f;
+}
+
+#slide2 {
+  background-color:#0074D9;
+}
+
+#slide3 {
+  background-color:#111111;
+}
+
+#slide4 {
+  background-color:#85144b
+}
+
+
+.nav {
+  position:fixed;
+  width:100%;
+  text-align:center;
+
+  top:40px;
+}
+
+.nav__list {
+  margin:0;
+  padding:0;
+}
+
+.nav__item {
+  display:inline-block;
+  width:15px;
+  height:15px;
+
+  margin:0 5px;
+
+  border-radius:100%;
+
+  background-color:#DDDDDD;
+
+  cursor:pointer;
+}
