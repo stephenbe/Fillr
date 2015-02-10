@@ -53,3 +53,8 @@ body, html, .slides {
 
   cursor:pointer;
 }
+
+.navigation {
+  position:fixed;
+  top:0;
+}

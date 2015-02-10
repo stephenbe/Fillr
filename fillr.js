@@ -8,22 +8,34 @@
     dots: true
   };
 
+  var constants = {
+    slides : $(".slide"),
+    currentSlide : $(".slide").first()
+  }
+
   /**
   * Plugin Constructor
   */
   function Fillr ( element, options ) {
     self = this;
     this.element = element;
+    this.constants = constants;
 
     this.settings = $.extend( {}, defaults, options );
     this._defaults = defaults;
-    this._name = fillr;
+
+
     this.init();
-  }
+  };
 
 
   Fillr.prototype.init = function () {
     console.log(self.numberOfSlides());
+
+    //add listeners
+    $(".js-fillr-previous").on("click",  self.goToPrevSlide);
+    $(".js-fillr-next").on("click",   self.goToNextSlide);
+
   };
 
   /**
@@ -41,7 +53,9 @@
   * @return the html that makes the nav
   */
   Fillr.prototype.buildDots = function() {
+    if (true) {
 
+    }
   };
 
   /**
@@ -49,7 +63,7 @@
   *
   */
   Fillr.prototype.goToNextSlide = function() {
-
+    self.goToSlide(3);
   };
 
   /**
@@ -57,9 +71,19 @@
   *
   */
   Fillr.prototype.goToPrevSlide = function() {
-
+    self.goToSlide(2);
   };
 
+
+  /**
+  * Goes to indicated slide
+  *
+  */
+  Fillr.prototype.goToSlide = function($slide) {
+    $("body, html").animate({
+      scrollTop: $(".slide").eq($slide).offset().top
+    });
+  };
 
   /**
   * Create the jquery plugin function
