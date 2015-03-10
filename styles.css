@@ -7,6 +7,12 @@ body, html, .slides {
 
 .slide {
   height:100%;
+
+  color:white;
+  text-align: center;
+  font-size:200px;
+  font-family: sans-serif;
+  padding-top:200px;
 }
 
 

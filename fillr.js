@@ -9,9 +9,10 @@
   };
 
   var constants = {
-    slides : $(".slide"),
-    currentSlide : $(".slide").first()
+    slides : $(".slide")    
   }
+
+  var currentSlide = $(".slide").first();
 
   /**
   * Plugin Constructor
@@ -63,7 +64,9 @@
   *
   */
   Fillr.prototype.goToNextSlide = function() {
-    self.goToSlide(3);
+    if(currentSlide.next().length){
+      self.goToSlide(currentSlide.first().next());
+    }
   };
 
   /**
@@ -71,7 +74,9 @@
   *
   */
   Fillr.prototype.goToPrevSlide = function() {
-    self.goToSlide(2);
+    if(currentSlide.prev().length) {
+      self.goToSlide(currentSlide.first().prev());
+    }
   };
 
 
@@ -80,8 +85,13 @@
   *
   */
   Fillr.prototype.goToSlide = function($slide) {
+    currentSlide = $slide;
+    var currentSlideId = currentSlide.index();
+
+    console.log("current slide" , currentSlideId);
+
     $("body, html").animate({
-      scrollTop: $(".slide").eq($slide).offset().top
+      scrollTop: $(".slide").eq(currentSlideId).offset().top
     });
   };
 
