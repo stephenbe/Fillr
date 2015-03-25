@@ -13,7 +13,7 @@
   }
 
   var currentSlide = $(".slide").first();
-
+  var is_animating = false;
   /**
   * Plugin Constructor
   */
@@ -36,7 +36,7 @@
     //add listeners
     $(".js-fillr-previous").on("click",  self.goToPrevSlide);
     $(".js-fillr-next").on("click",   self.goToNextSlide);
-
+    $(window).on("mousewheel DOMMouseScroll", self.onScroll);
   };
 
   /**
@@ -88,11 +88,41 @@
     currentSlide = $slide;
     var currentSlideId = currentSlide.index();
 
-    console.log("current slide" , currentSlideId);
 
-    $("body, html").animate({
-      scrollTop: $(".slide").eq(currentSlideId).offset().top
-    });
+	if (is_animating != true) {
+		var currentSlideId = currentSlide.index();
+		is_animating = true;
+
+
+		$("body, html")
+		.animate({			 
+			scrollTop: $(".slide").eq(currentSlideId).offset().top,
+		}, 300, "linear", function() {
+			is_animating = false;			 
+		});
+	}
+
+  };
+  Fillr.prototype.onScroll = function(event) {
+	
+	//Normalize event wheel delta
+	var delta = event.originalEvent.wheelDelta / 30 || -event.originalEvent.detail;
+	console.log(delta);
+	console.log(event.originalEvent.wheelDelta);
+	console.log("current slide :", currentSlide.index());
+	console.log(is_animating);
+	//If the user scrolled up, it goes to previous slide, otherwise - to next slide
+	if(delta < -1)
+	{
+	  self.goToNextSlide();
+	}
+	else if(delta > 1)
+	{
+	  self.goToPrevSlide();
+	}  
+
+
+	event.preventDefault();  
   };
 
   /**
