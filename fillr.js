@@ -13,6 +13,7 @@
   }
 
   var currentSlide = $(".slide").first();
+  var currentSlideId = $(".slide").first().index();
   var is_animating = false;
   /**
   * Plugin Constructor
@@ -31,7 +32,7 @@
 
 
   Fillr.prototype.init = function () {
-    console.log(self.numberOfSlides());
+    //console.log(self.numberOfSlides());
 
     //add listeners
     $(".js-fillr-previous").on("click",  self.goToPrevSlide);
@@ -85,12 +86,12 @@
   *
   */
   Fillr.prototype.goToSlide = function($slide) {
-    currentSlide = $slide;
-    var currentSlideId = currentSlide.index();
+    
 
-
+    console.log(is_animating);
 	if (is_animating != true) {
-		var currentSlideId = currentSlide.index();
+		currentSlide = $slide;
+		currentSlideId = currentSlide.index();
 		is_animating = true;
 
 
@@ -107,10 +108,10 @@
 	
 	//Normalize event wheel delta
 	var delta = event.originalEvent.wheelDelta / 30 || -event.originalEvent.detail;
-	console.log(delta);
-	console.log(event.originalEvent.wheelDelta);
-	console.log("current slide :", currentSlide.index());
-	console.log(is_animating);
+	//console.log(delta);
+	//console.log(event.originalEvent.wheelDelta);
+	//console.log("current slide :", currentSlide.index());
+	//console.log(is_animating);
 	//If the user scrolled up, it goes to previous slide, otherwise - to next slide
 	if(delta < -1)
 	{
