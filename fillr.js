@@ -135,12 +135,22 @@
 	    $.data(this, 'scrollTimer', setTimeout(function() {
 	        // do something
 	        console.log("Haven't scrolled in 250ms!");
+            var found=null;
+            var found_top=0;
 
-	        $(".slide").each(function(index, el) {
-	        	var $this = $(this);
-	        	var offset = $this.offset().top - $(window).scrollTop();
-	        	console.log();
-	        });
+            $(".slide").each(function(index, el) {
+            	var $this = $(this);
+            	var offset = $this.offset().top - $(window).scrollTop();
+                //console.log(offset);
+                console.log(found_top);
+            	
+                if( ( found == null ) || ( ( offset >= 0 ) && ( offset < found_top ) ) ){
+                    found = $this;
+                    found_top = offset;
+                }
+            });
+
+            console.log(found);
 	    }, 2000));			
 	}
 
