@@ -37,7 +37,8 @@
     //add listeners
     $(".js-fillr-previous").on("click",  self.goToPrevSlide);
     $(".js-fillr-next").on("click",   self.goToNextSlide);
-    $(window).on("mousewheel DOMMouseScroll", self.onScroll);
+    $(window).on("mousewheel DOMMouseScroll", self.onMousewheel);
+    $(window).scroll(self.onScroll);
   };
 
   /**
@@ -88,7 +89,7 @@
   Fillr.prototype.goToSlide = function($slide) {
     
 
-    console.log(is_animating);
+    //console.log(is_animating);
 	if (is_animating != true) {
 		currentSlide = $slide;
 		currentSlideId = currentSlide.index();
@@ -104,14 +105,17 @@
 	}
 
   };
-  Fillr.prototype.onScroll = function(event) {
+  Fillr.prototype.onMousewheel = function(event) {
 	
 	//Normalize event wheel delta
 	var delta = event.originalEvent.wheelDelta / 30 || -event.originalEvent.detail;
-	//console.log(delta);
-	//console.log(event.originalEvent.wheelDelta);
-	//console.log("current slide :", currentSlide.index());
-	//console.log(is_animating);
+
+		clearTimeout($.data(this, 'scrollTimer'));
+		$.data(this, 'scrollTimer', setTimeout(function() {
+			console.log("Haven't scrolled in 250ms!");
+		}, 3000));
+
+
 	//If the user scrolled up, it goes to previous slide, otherwise - to next slide
 	if(delta < -1)
 	{
@@ -125,6 +129,20 @@
 
 	event.preventDefault();  
   };
+
+	Fillr.prototype.onScroll = function(event) {
+	   clearTimeout($.data(this, 'scrollTimer'));
+	    $.data(this, 'scrollTimer', setTimeout(function() {
+	        // do something
+	        console.log("Haven't scrolled in 250ms!");
+
+	        $(".slide").each(function(index, el) {
+	        	var $this = $(this);
+	        	var offset = $this.offset().top - $(window).scrollTop();
+	        	console.log();
+	        });
+	    }, 2000));			
+	}
 
   /**
   * Create the jquery plugin function
