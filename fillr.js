@@ -86,8 +86,7 @@
   * Goes to indicated slide
   *
   */
-  Fillr.prototype.goToSlide = function($slide) {
-    
+  Fillr.prototype.goToSlide = function($slide) {    
 
     //console.log(is_animating);
 	if (is_animating != true) {
@@ -134,23 +133,23 @@
 	   clearTimeout($.data(this, 'scrollTimer'));
 	    $.data(this, 'scrollTimer', setTimeout(function() {
 	        // do something
-	        console.log("Haven't scrolled in 250ms!");
+	        //console.log("Haven't scrolled in 250ms!");
             var found=null;
             var found_top=0;
 
             $(".slide").each(function(index, el) {
-            	var $this = $(this);
-            	var offset = $this.offset().top - $(window).scrollTop();
+              var $this = $(this);
+            	var offset = Math.abs($this.offset().top - $(window).scrollTop());
                 //console.log(offset);
-                console.log(found_top);
-            	
-                if( ( found == null ) || ( ( offset >= 0 ) && ( offset < found_top ) ) ){
+           	
+                //if( ( found == null ) || ( ( offset >= 0 ) && ( offset < found_top ) ) ){
+                if((found == null ) || ( offset >= 0 ) && ( offset < found_top )){
                     found = $this;
                     found_top = offset;
                 }
             });
-
-            console.log(found);
+            self.goToSlide(found);
+            
 	    }, 2000));			
 	}
 
