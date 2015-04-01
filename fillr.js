@@ -89,21 +89,27 @@
   Fillr.prototype.goToSlide = function($slide) {    
 
     //console.log(is_animating);
-	if (is_animating != true) {
-		currentSlide = $slide;
-		currentSlideId = currentSlide.index();
-		is_animating = true;
+  	if (is_animating != true) {
+  		currentSlide = $slide;
+  		currentSlideId = currentSlide.index();
+  		is_animating = true;
 
 
-		$("body, html")
-		.animate({			 
-			scrollTop: $(".slide").eq(currentSlideId).offset().top,
-		}, 300, "linear", function() {
-			is_animating = false;			 
-		});
-	}
-
-  };
+  		$("body, html").animate(
+        {	 
+    			scrollTop: $(".slide").eq(currentSlideId).offset().top,
+        },
+        {
+          duration:1500,
+          easing: "easeInOutCirc",
+          complete: function() {
+            is_animating = false; 
+          }
+        }
+      );
+    }
+  }
+  
   Fillr.prototype.onMousewheel = function(event) {
 	
 	//Normalize event wheel delta
