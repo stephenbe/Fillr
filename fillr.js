@@ -4,12 +4,13 @@
 
     var fillr = "fillr";
 
-    var defaults = {
-        dots: true,
+    var defaults = {        
         slide: '.slide',
         previous_btn : '.js-fillr-previous',
         next_btn : '.js-fillr-next',
-        dots_append : ".dots"
+        dots: true,
+        dots_append : ".dots",
+        dots_tag : "a"
     };
 
     var initials = {
@@ -82,12 +83,18 @@
         if (self.settings.dots == true) {            
             for (var i = 0; i < self.settings.slideCount; i++) {
                 var number = i + 1;
-                html += '<a href="#slide'+ number +'" class="nav__item mav__item--' + number + ' js-pagination" data-slide="' + number + '"><span class="nav__text">'+ number +'</span></a>';
+                var href_string = '';
+
+                if (self.settings.dots_tag === "a") {
+                    href_string = 'href="#slide'+ number +'"';
+                };
+
+                //html for the dotsis here
+                html += '<'+ self.settings.dots_tag + ' ' + href_string + 'class="nav__item mav__item--' + number + ' js-pagination" data-slide="' + number + '"><span class="nav__text">'+ number +'</span></'+ self.settings.dots_tag +'>';
             };
         }
 
         $(self.settings.dots_append).append(html);
-        //console.log($(self.element));
     };
 
     /**
