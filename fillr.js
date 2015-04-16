@@ -10,7 +10,14 @@
         next_btn : '.js-fillr-next',
         dots: true,
         dots_append : ".dots",
-        dots_tag : "a"
+        dots_tag : "a",
+        easing : 'easeInOutCirc',
+        init : function(elem,code) {
+        },
+        beforeChange : function(elem) {
+        },
+        afterChange : function(elem) {
+        }
     };
 
     var initials = {
@@ -18,6 +25,7 @@
         currentSlideId : $(".slide").first().index(),
         slideCount : $(".slide").length,
         is_animating : false,
+        slide_change : 0
 
     };
 
@@ -41,7 +49,10 @@
         $(self.settings.previous_btn).on("click",  self.goToPrevSlide);
         $(self.settings.next_btn).on("click",   self.goToNextSlide);
         $(window).on("mousewheel DOMMouseScroll", self.onMousewheel);
-        $(window).scroll(self.onScroll);
+
+        if ($(window).scrollTop() > 0) {
+         $(window).scroll(self.onScroll);
+        }
 
         //pagination
         if (self.settings.dots == true) { 
@@ -127,15 +138,20 @@
             self.settings.currentSlideId = self.settings.currentSlide.index();
             self.settings.is_animating = true;
 
+            self.settings.beforeChange(self.settings.currentSlide);
+            self.settings.slide_change++;
+           
             $("body, html").animate(
                 {    
                     scrollTop: $(self.settings.slide).eq(self.settings.currentSlideId).offset().top,
                 },
                 {
                     duration:1500,
-                    easing: "easeInOutCirc",
+                    easing: self.settings.easing,
                     complete: function() {
-                        self.settings.is_animating = false; 
+                       //self.settings.slide_change = 0;
+                        self.settings.is_animating = false;
+                        //self.settings.afterChange(self.settings.currentSlide);
                     }
                 }
             );
@@ -178,13 +194,16 @@
     }
 
     Fillr.prototype.onScroll = function(event) {
-        clearTimeout($.data(this, 'scrollTimer'));
-        $.data(this, 'scrollTimer', setTimeout(function() {
-            self.defineCurrentSlide();
-            
-            self.goToSlide(self.settings.currentSlide);
 
-        }, 2000));          
+        if(self.settings.is_animating == false) {             
+            clearTimeout($.data(this, 'scrollTimer'));
+            $.data(this, 'scrollTimer', setTimeout(function() {
+                self.defineCurrentSlide();
+                console.log("onScroll");
+                self.goToSlide(self.settings.currentSlide);
+
+            }, 2000));    
+         }      
     }
 
     /**
