@@ -166,6 +166,10 @@ jQuery.extend( jQuery.easing,
     $(".slides").fillr({
       dots : true,
       easing : 'easeInOutExpo',
+      init : function(elem,code) {
+        console.log("init");
+      },
+
       beforeChange : function(elem) {
       console.log("before");
       },
